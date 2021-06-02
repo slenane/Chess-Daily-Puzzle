@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#board {
+    margin: 0 auto;
+    width: 300px;
+}
