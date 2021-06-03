@@ -10,16 +10,66 @@
       integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
       crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
     <h1>Daily Chess Puzzle</h1>
 
-    <div id="board"></div>
+    <div class="controls">
+        <div id="board"></div>
+        <div class="control-panel">
+            <div class="control-panel-left">
+                <div class="control-icon hint">
+                    <i class="far fa-lightbulb"></i>
+                    <span class="hover-message">Hint</span>
+                </div>
+                <div class="control-icon solution">
+                    <i class="far fa-question-circle"></i>
+                    <span class="hover-message">Solution</span>
+                </div>
+                <div class="control-icon reset">
+                    <i class="fas fa-redo"></i>
+                    <span class="hover-message">Reset</span>
+                </div>
+                <div class="control-icon flip">
+                    <i class="fas fa-sync-alt"></i>
+                    <span class="hover-message">Flip board</span>
+                </div>
+            </div>
 
+            <div class="control-panel-right">
+                <div class="control-icon play">
+                    <i class="fas fa-play"></i>
+                    <span class="hover-message">Play / Pause</span>
+                </div>
+                <div class="control-icon start">
+                    <i class="fas fa-step-backward"></i>
+                    <span class="hover-message">First Move</span>
+                </div>
+                <div class="control-icon back">
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="hover-message">Previous Move</span>
+                </div>
+                <div class="control-icon forward">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="hover-message">Next Move</span>
+                </div>
+                <div class="control-icon end">
+                    <i class="fas fa-step-forward"></i>
+                    <span class="hover-message">Last Move</span>
+                </div>
+            </div>
+        </div>
+        <div class="status-bar">
+            <p class="status"></p>
+        </div>
+    </div>
+    
     <div class="info">
-      <h3 class="title"></h3>
-      <a href="" class="url">Click here to view on chess.com</a>
+      <h4 class="title"></h4>
+      <p class="moves"></p>
+      <a class="url">View on chess.com</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"

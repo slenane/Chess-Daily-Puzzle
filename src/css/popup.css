@@ -1,9 +1,138 @@
 body {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
+    width: 320px;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+h1 {
+    font-size: 1.5rem;
 }
 
 #board {
     margin: 0 auto;
     width: 300px;
 }
+
+img:hover {
+    cursor: grab;
+}
+
+.control-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 10px;
+    padding: 5px 0;
+    background-color: #52514e;
+}
+
+.control-panel i {
+    color: #bdbdbc;
+}
+
+.control-panel i:hover {
+    cursor: pointer;
+}
+
+.control-panel-left {
+    display: grid;
+    grid-template-columns: repeat(4, 1.8rem);
+    justify-content: start;
+}
+.control-panel-right {
+    display: grid;
+    grid-template-columns: repeat(5, 1.5rem);
+    justify-content: end;
+}
+
+.control-icon {
+    position: relative;
+}
+
+.hover-message {
+    opacity: 0;
+    font-size: 0.7rem;
+    background-color: white;
+    border: 1px solid black;
+    position: absolute;
+    top: 100%;
+    white-space: nowrap;
+    padding: 3px;
+    transition: 0s opacity;
+}
+
+.control-icon:hover>.hover-message {
+    opacity: 1;
+    transition-delay: 1s;
+}
+
+.status-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 10px;
+    padding: 2px 0;
+}
+
+.status-bar.white {
+    background-color: #c6c6c5;
+}
+
+.status-bar.black {
+    background-color: #2e2c29;
+}
+
+.status-bar.white .status {
+    color: #2e2c29;
+}
+
+.status-bar.black .status {
+    color: #c6c6c5;
+}
+
+.status {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.status-bar.incorrect {
+    background-color: #b23330;
+}
+
+.status-bar.correct,
+.status-bar.solved {
+    background-color: #769656;
+}
+
+.status-bar.incorrect .status,
+.status-bar.correct .status,
+.status-bar.solved .status {
+    color: #fdfdfc;
+}
+
+h4 {
+    margin: .5rem;
+}
+
+.moves {
+    font-size: .9rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.move-number {
+    font-size: .8rem;
+    font-weight: 300;
+}
+
+.url {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+a:visited {
+    color: #2e2c29;
+} 
