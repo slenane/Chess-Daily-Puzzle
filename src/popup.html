@@ -14,7 +14,19 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
-    <h1>Daily Chess Puzzle</h1>
+    <h1 class="title"></h1>
+    <div class="random-puzzle">
+        <div class="puzzle-type-slider">
+            <p>Random</p>
+            <label class="switch">
+                <input type="checkbox" class="random-slider">
+                <span class="slider round"></span>
+              </label>
+        </div>
+        <div class="next-puzzle">
+            <button class="next-puzzle-button hide">Next</button>
+        </div>
+    </div>
 
     <div class="controls">
         <div id="board"></div>
@@ -67,7 +79,6 @@
     </div>
     
     <div class="info">
-      <h4 class="title"></h4>
       <p class="moves"></p>
       <a class="url">View on chess.com</a>
     </div>

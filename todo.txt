@@ -3,11 +3,11 @@ Chess.com styles:
 Controller - Hint - Makes the move for you (!!)
             - Restart (!!)
             - Rotate (!!)
-            - Play/pause (ADD PAUSE)
-            - Start
-            - Back
-            - Forward
-            - Last
+            - Play/pause (!!)
+            - Start (!!)
+            - Back (!!)
+            - Forward (!!)
+            - Last (!!)
 
 Incorrect - Make the move - set timeout and move it Back (!!)
             - status bar show incorrect until it moves back (!!)
