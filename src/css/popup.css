@@ -8,6 +8,14 @@ body {
     visibility: hidden;
 }
 
+.noDisplay {
+    display: none;
+}
+
+img:hover {
+    cursor: grab;
+}
+
 h1.title {
     font-size: 1.3rem;
     margin-bottom: 0;
@@ -99,7 +107,7 @@ input:checked + .slider:before {
 
 .next-puzzle-button {
     background-color: #2196F3;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
     outline: none;
     border: none;
@@ -112,13 +120,89 @@ input:checked + .slider:before {
     transform: scale(1.02);
 } 
 
+.disabled-button {
+    background-color: #ccc;
+}
+
+.disabled-button:hover {
+    transform: scale(1);
+    cursor: auto;
+}
+
+.controls {
+    position: relative;
+}
+
+.promotion-window-white,
+.promotion-window-black {
+    padding: 0 12px;
+    position: absolute;
+    top: 2px;
+    display: grid;
+    grid-template-columns: 37px;
+    grid-template-rows: repeat(4, 37px) 20px;
+    height: 37px;
+    width: 37px;
+    z-index: 2;
+}
+
+.promotion-w-a,
+.promotion-b-h {
+    transform: translateX(0px);
+}
+.promotion-w-b,
+.promotion-b-g {
+    transform: translateX(37px);
+}
+.promotion-w-c,
+.promotion-b-f {
+    transform: translateX(74px);
+}
+.promotion-w-d,
+.promotion-b-e {
+    transform: translateX(111px);
+}
+.promotion-w-e,
+.promotion-b-d {
+    transform: translateX(148px);
+}
+.promotion-w-f,
+.promotion-b-c {
+    transform: translateX(185px);
+}
+.promotion-w-g,
+.promotion-b-b {
+    transform: translateX(222px);
+}
+.promotion-w-h,
+.promotion-b-a {
+    transform: translateX(259px);
+}
+
+.promotion-piece img {
+    background-color: white;
+    height: 37px;
+    width: 37px;
+    cursor: pointer;
+}
+
+.close-promotion-window {
+    background-color: white;
+}
+
+.close-window-white,
+.close-window-black {
+    cursor: pointer;
+}
+
 #board {
     margin: 0 auto;
     width: 300px;
+    z-index: 1;
 }
 
-img:hover {
-    cursor: grab;
+.notation-322f9 {
+    font-size: 0.7rem;
 }
 
 .control-panel {
@@ -213,15 +297,21 @@ img:hover {
     color: #fdfdfc;
 }
 
-h4 {
-    margin: .5rem;
+.tip {
+    color: #52b1dc;
+    font-weight: 700;
+    font-size: .8rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0;
+    margin-block-end: 0.3rem;
 }
 
 .moves {
-    font-size: .9rem;
-    font-weight: 400;
+    font-size: 0.9rem;
+    font-weight: 500;
     font-style: italic;
     padding: 0 10px;
+    margin-block-end: 0.3rem;
 }
 
 .move:hover {

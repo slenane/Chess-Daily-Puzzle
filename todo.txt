@@ -1,21 +1,5 @@
-Chess.com styles:
 
-Controller - Hint - Makes the move for you (!!)
-            - Restart (!!)
-            - Rotate (!!)
-            - Play/pause (!!)
-            - Start (!!)
-            - Back (!!)
-            - Forward (!!)
-            - Last (!!)
 
-Incorrect - Make the move - set timeout and move it Back (!!)
-            - status bar show incorrect until it moves back (!!)
-
-Correct - Show correct move under the board (!!)
-        - update the status bar (!!)
-
-Solved! - Freeze frame (!!)
 
 My styles:
 Icon - red/green dot by top of pawn to show status

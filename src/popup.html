@@ -17,19 +17,36 @@
     <h1 class="title"></h1>
     <div class="random-puzzle">
         <div class="puzzle-type-slider">
-            <p>Random</p>
+            <label for="puzzle-switch">Random</label>
             <label class="switch">
-                <input type="checkbox" class="random-slider">
+                <input type="checkbox" id="puzzle-switch" class="random-slider">
                 <span class="slider round"></span>
               </label>
         </div>
         <div class="next-puzzle">
-            <button class="next-puzzle-button hide">Next</button>
+            <button class="next-puzzle-button hide disabled-button">Next</button>
         </div>
     </div>
 
+    
     <div class="controls">
+        <div class="promotion-window-white hide">
+            <div class="promotion-piece queen" data-piece="q"><img src="img/chesspieces/wikipedia/wQ.png" class="piece" alt="black queen promotion piece"></div>
+            <div class="promotion-piece knight" data-piece="n"><img src="img/chesspieces/wikipedia/wN.png" class="piece" alt="black knight promotion piece"></div>
+            <div class="promotion-piece rook" data-piece="r"><img src="img/chesspieces/wikipedia/wR.png" class="piece" alt="black rook promotion piece"></div>
+            <div class="promotion-piece bishop" data-piece="b"><img src="img/chesspieces/wikipedia/wB.png" class="piece" alt="black bishop promotion piece"></div>
+            <div class="close-promotion-window"><i class="fas fa-times close-window-white"></i></div>
+        </div>
+        <div class="promotion-window-black hide">
+            <div class="promotion-piece queen" data-piece="q"><img src="img/chesspieces/wikipedia/bQ.png" class="piece" alt="black queen promotion piece"></div>
+            <div class="promotion-piece knight" data-piece="n"><img src="img/chesspieces/wikipedia/bN.png" class="piece" alt="black knight promotion piece"></div>
+            <div class="promotion-piece rook" data-piece="r"><img src="img/chesspieces/wikipedia/bR.png" class="piece" alt="black rook promotion piece"></div>
+            <div class="promotion-piece bishop" data-piece="b"><img src="img/chesspieces/wikipedia/bB.png" class="piece" alt="black bishop promotion piece"></div>
+            <div class="close-promotion-window"><i class="fas fa-times close-window-black"></i></div>
+        </div>
+
         <div id="board"></div>
+
         <div class="control-panel">
             <div class="control-panel-left">
                 <div class="control-icon hint">
@@ -79,8 +96,9 @@
     </div>
     
     <div class="info">
-      <p class="moves"></p>
-      <a class="url">View on chess.com</a>
+        <p class="tip">Drag the pieces to solve!</p>
+        <p class="moves noDisplay"></p>
+        <a class="url">View on chess.com</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
