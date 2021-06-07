@@ -1,14 +1,20 @@
 {
   "name": "Daily Chess Puzzle",
-  "description": "Daily chess puzzle provided by chess.com",
-  "options_page": "options.html",
+  "description": "Daily chess puzzles provided by chess.com.",
   "background": {
     "page": "background.html"
   },
+  "icons": { 
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+   "128": "icon128.png" 
+  },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
+    "default_icon": "icon48.png"
   },
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "permissions": ["<all_urls>"], 
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
 }

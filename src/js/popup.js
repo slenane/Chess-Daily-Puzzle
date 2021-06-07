@@ -1,13 +1,21 @@
 import "../css/popup.css";
+import 'jquery';
 import ChessWebAPI from 'chess-web-api';
-const chessAPI = new ChessWebAPI();
 import Chess from 'chess.js';
+import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0';
 
-let game, dailyPuzzle, board, correctMoves, correctFENs, totalMoves, moveCount, moveCountUI, promotionPiece;
+const chessAPI = new ChessWebAPI();
+
+// Initialise the game, puzzle and board variables
+let game, dailyPuzzle, board; 
+// Initialze game variables
+let correctMoves, correctFENs, totalMoves, moveCount, moveCountUI;
+// Initialize state variables
 let playing, hintActive, typeChanged, solutionShown, promoting;
-let closePromotionWhite, closePromotionBlack;
+// Initialize promotion variables
+let promotionPiece, closePromotionWhite, closePromotionBlack;
 
-
+// Set variables to default values on load or puzzle change
 let resetVariables = () => {
   game = undefined;
   dailyPuzzle = undefined;
@@ -55,11 +63,13 @@ let backIcon = document.querySelector('.back');
 let forwardIcon = document.querySelector('.forward');
 let endIcon = document.querySelector('.end');
 
+// Display puzzle title and link to chess.com
 let displayInfo = (puzzle) => {
   puzzleTitle.textContent = puzzle.body.title;
   puzzleURL.href = puzzle.body.url;
 };
 
+// Get array of correct moves and corresponding FENs from the puzzle PGN
 let getCorrectMoves = (puzzle) => {
   // parse the puzzle's PGN with a regular expression to return everything after the double line break (standard PGN notation)
   correctMoves = (puzzle.body.pgn).match('(?:\\r\\n\\r\\n)(.*)')[1];
@@ -71,6 +81,7 @@ let getCorrectMoves = (puzzle) => {
   // Generate a new table to make the moves
   let pos = new Chess(puzzle.body.fen);
   correctMoves.forEach(move => {
+    // For each move, get the FEN
     correctFENs.push(getFEN(move, pos));
   });
 }
@@ -82,12 +93,13 @@ let getFEN = (move, pos) => {
   return pos.fen();
 }
 
+// Update the status bar under the board
 let updateStatus = (move) => {
   statusBar.classList.remove('white');
   statusBar.classList.remove('black');
 
-  // Check if the puzzle has been solved
   if (move === "solved") {
+    // Check if the puzzle has been solved
     statusBar.classList.add('solved');
     playerStatus.textContent = 'Solved!';
     controlPanelRight.classList.remove('hide');
@@ -127,6 +139,7 @@ let updateStatus = (move) => {
   }
 }
 
+// Check that the game is in the right state before moving a piece
 let onDragStart = (source, piece, position, orientation) => {
   // If promotion window is open
   if (promoting === true) return false;
@@ -141,56 +154,20 @@ let onDragStart = (source, piece, position, orientation) => {
     return false
   }
 }
-  
+
 let onDrop = async (source, target) => {
   // Save the current position to load if the user makes the incorrect move
   let currentPOS = game.fen();
   // Get the piece that was moved
   let square = document.querySelector(`.square-${source}`);
   let piece = square.getElementsByTagName('img')[0].dataset.piece;
+
   // If that piece was a pawn and it landed on either row 1 or 8
   if (/[18]/.test(target[1]) && piece[1] === "P") {
-    // Move the pawn to the correct promotion square to hide it behind the promotion window
-    game.move({
-      from: source,
-      to: target,
-      promotion: 'q'
-    });
-    board.position(game.fen());
-
-    // Check if it's a valid move
-    let testGame = new Chess(currentPOS);
-    let testMove = testGame.move({
-      from: source,
-      to: target,
-      promotion: 'q'
-    });
-    if (testMove === null) return 'snapback';
-
-    // Reset the promotion piece
-    promotionPiece = "";
-    
-    // Get the promotion piece
-    await getPromotion(target, piece);
-
-    if (promotionPiece !== "") {
-      let targetSquare = document.querySelector(`.square-${target}`);
-      targetSquare.getElementsByTagName('img')[0].src = `img/chesspieces/wikipedia/${piece[0]}${promotionPiece.toUpperCase()}.png`;
-    }
-
-    // Reload the actual position if closed
-    if (closePromotionBlack === true || closePromotionWhite === true) {
-      game.load(currentPOS);
-      board.position(game.fen());
-      setTimeout(() => {
-        closePromotionBlack = false;
-        closePromotionWhite = false;
-        return;
-      }, 750);
-    }
-    
-    game.load(currentPOS);
+    // Handle piece promotion
+    await promote(source, target, piece);
   } 
+
   // see if the move is legal
   let move = game.move({
       from: source,
@@ -255,8 +232,8 @@ let onDrop = async (source, target) => {
 
 //  make opponent's move automatically or user's move through hint
 let makeNextMove = (hint) => {
-  // If there is a hint already active or if the soultion is shown then return
-  if ((hintActive === true && hint) || (solutionShown === true && hint)) return;
+  // If there is a hint already active, user is promoting or if the soultion is shown then return
+  if ((hintActive === true && hint) || (solutionShown === true && hint) || promoting === true) return;
   // If there is no valid move - return
   if (correctFENs[moveCount] === undefined) return;
   // Update the UI
@@ -274,7 +251,7 @@ let makeNextMove = (hint) => {
   } else {
     if (moveCount === 0) {
       puzzleMoves.insertAdjacentHTML('beforeend', `<span class='move-number'>${moveCountUI}...</span>`);
-      // Incremnet the UI move counter after user move
+      // Increment the UI move counter after user move
       moveCountUI++;
     }
     puzzleMoves.insertAdjacentHTML('beforeend', ` <span class="move move-${moveCount}">${correctMoves[moveCount]}</span> `);
@@ -310,6 +287,48 @@ let onSnapEnd = () => {
   board.position(game.fen());
 }
 
+// Handle piece promotion
+let promote = async (source, target, piece) => {
+  let currentPOS = game.fen();
+  // Set the board orientation based on the players turn so the promotion window always shows on top
+  let turn = game.turn() === 'w' ? "white" : "black";
+  board.orientation(turn);
+
+  // Move the pawn to the correct promotion square to hide it behind the promotion window
+  let testMove = game.move({
+    from: source,
+    to: target,
+    promotion: 'q'
+  });
+  board.position(game.fen());
+  // illegal move
+  if (testMove === null) return 'snapback';
+
+  // Reset the promotion piece
+  promotionPiece = "";
+  
+  // Get the promotion piece
+  await getPromotion(target, piece);
+
+  if (promotionPiece !== "") {
+    let targetSquare = document.querySelector(`.square-${target}`);
+    targetSquare.getElementsByTagName('img')[0].src = `img/chesspieces/wikipedia/${piece[0]}${promotionPiece.toUpperCase()}.png`;
+  }
+
+  // Reload the actual position if closed
+  if (closePromotionBlack === true || closePromotionWhite === true) {
+    game.load(currentPOS);
+    board.position(game.fen());
+    setTimeout(() => {
+      closePromotionBlack = false;
+      closePromotionWhite = false;
+      return;
+    }, 750);
+  }
+  
+  game.load(currentPOS);
+}
+
 let getPromotion = (target, piece) => {
     promoting = true;
     if (piece[0] === 'w') {
@@ -340,17 +359,22 @@ let getPromotionPiece = (e) => {
   if (e.target.classList.contains("close-window-white")) closePromotionWhite = true;
   if (e.target.matches(".piece")) promotionPiece = e.target.closest('.promotion-piece').dataset.piece;
   if (promotionPiece !== "" || closePromotionBlack === true || closePromotionWhite === true) {
-    for (let i = 0; i < 8; i++) {
-      let char = String.fromCodePoint(i + 97);
-      promotionWindowWhite.classList.remove(`promotion-w-${char}`);
-      promotionWindowBlack.classList.remove(`promotion-b-${char}`);
-    }
-    promotionWindowWhite.classList.add('hide');
-    promotionWindowBlack.classList.add('hide');
-    promoting = false;
+    clearPromotion();
   }
 }
 
+let clearPromotion = () => {
+  for (let i = 0; i < 8; i++) {
+    let char = String.fromCodePoint(i + 97);
+    promotionWindowWhite.classList.remove(`promotion-w-${char}`);
+    promotionWindowBlack.classList.remove(`promotion-b-${char}`);
+  }
+  promotionWindowWhite.classList.add('hide');
+  promotionWindowBlack.classList.add('hide');
+  promoting = false;
+}
+
+// Change between daily and random puzzles
 let changePuzzleType = async () => {
   if (puzzleType.checked) {
     nextPuzzleBtn.textContent = "18";
@@ -363,6 +387,7 @@ let changePuzzleType = async () => {
   }
 }
 
+// Handle next puzzle button click
 let nextPuzzle = async () => {
   // Add disabled styles
   nextPuzzleBtn.classList.add('disabled-button');
@@ -392,6 +417,7 @@ let nextPuzzle = async () => {
 
 // Show the solution to the puzzle under the board
 let showSolution = () => {
+  if (promoting === true) return;
   puzzleMoves.textContent = "";
   controlPanelRight.classList.remove('hide');
   tip.classList.add("noDisplay");
@@ -422,19 +448,25 @@ let showSolution = () => {
   }
 }
 
+// Reset board to starting position
 let resetPuzzle = async () => {
-  // Reset board to starting position
   moveCount = 0;
   moveCountUI = 1;
-  puzzleMoves.textContent = "";
-  controlPanelRight.classList.add('hide');
   solutionShown = false;
   game.load(dailyPuzzle.body.fen);
   board.position(game.fen());
   // Update the UI
+  clearPromotion();
+  controlPanelRight.classList.add('hide');
+  puzzleMoves.textContent = "";
   tip.classList.remove("noDisplay");
   puzzleMoves.classList.add("noDisplay");
   updateStatus("start");
+}
+
+let flipBoard = () => {
+  if (promoting === true) return;
+  else board.flip();
 }
 
 let playPuzzle = async () => {
@@ -458,6 +490,7 @@ let playPuzzle = async () => {
         playing = false;
         // Show play icon
         playIcon.innerHTML = `<i class="fas fa-play"></i>`;
+        updateStatus('solved');
       }
       // Set the game to the FEN of the next move
       game.load(correctFENs[moveCount]);
@@ -546,7 +579,6 @@ let selectMove = (e) => {
 
 
 // chessboardjs
-// Display chessbaord and update if move is correct
 let displayBoard = (puzzle) => {
   let orientation = game.turn() === 'w' ? 'white' : 'black';
   let config = {
@@ -571,15 +603,8 @@ let init = async (random) => {
   // Get the daily puzzle informaiton from chess.com
   if (random) dailyPuzzle = await chessAPI.getDailyPuzzleRandom();
   else dailyPuzzle = await chessAPI.getDailyPuzzle();
-  // dailyPuzzle = {
-  //   body: {
-  //     title: "test",
-  //     fen: "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
-  //     pgn: "[Round [Result '*'] \r\n\r\n1. d5 2. e5 d4 3. e6 d3 4. exf7+ Kd7 5. fxg8=N dxc2 6. Nf6+ exf6 7. Nc3 cxd1=Q+ 8. Nxd1 *",
-  //     url: ""
-  //   }
-  // }
-  console.log(dailyPuzzle);
+  // Clear the promotion windows if they are open
+  clearPromotion();
   // Display the puzzle informationon the screen
   displayInfo(dailyPuzzle);
   // Generate an array of FENs from the correct moves to test the user's moves against
@@ -608,7 +633,7 @@ solutionIcon.addEventListener('click', showSolution);
 // Reset game
 resetIcon.addEventListener('click', resetPuzzle);
 // Flip board
-flipIcon.addEventListener('click', () => board.flip());
+flipIcon.addEventListener('click', flipBoard);
 // Play / Pause game
 playIcon.addEventListener('click', playPuzzle);
 // First move

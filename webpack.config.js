@@ -37,18 +37,20 @@ var options = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png)$/i,
+        test: /(icon).*(\.png)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        },
+      },
+      {
+        test: /[wb][PKNQRB](\.png)$/i,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
           outputPath: 'img/chesspieces/wikipedia'
         },
       },
-      // {
-      //   test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
-      //   loader: "file-loader?name=[name].[ext]",
-      //   exclude: /node_modules/
-      // },
       {
         test: /\.html$/,
         loader: "html-loader",
@@ -63,7 +65,10 @@ var options = {
     // clean the build folder
     new CleanWebpackPlugin(),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(["NODE_ENV"]),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      DEBUG: false,
+    }),
     new CopyWebpackPlugin([{
       from: "src/manifest.json",
       transform: function (content, path) {
@@ -75,6 +80,12 @@ var options = {
         }))
       }
     }]),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery'
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "popup.html"),
       filename: "popup.html",

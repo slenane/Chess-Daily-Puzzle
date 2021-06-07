@@ -144,6 +144,7 @@ input:checked + .slider:before {
     height: 37px;
     width: 37px;
     z-index: 2;
+    transform: rotate(180deg);
 }
 
 .promotion-w-a,

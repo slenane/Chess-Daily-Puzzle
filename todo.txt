@@ -1,6 +1,0 @@
-
-
-
-My styles:
-Icon - red/green dot by top of pawn to show status
-

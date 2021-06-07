@@ -11,3 +11,8 @@ import '../img/chesspieces/wikipedia/wN.png';
 import '../img/chesspieces/wikipedia/wP.png';
 import '../img/chesspieces/wikipedia/wQ.png';
 import '../img/chesspieces/wikipedia/wR.png';
+
+import '../img/icons/icon16.png';
+import '../img/icons/icon32.png';
+import '../img/icons/icon48.png';
+import '../img/icons/icon128.png';
