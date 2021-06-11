@@ -74,7 +74,7 @@ let getCorrectMoves = (puzzle) => {
   // parse the puzzle's PGN with a regular expression to return everything after the double line break (standard PGN notation)
   correctMoves = (puzzle.body.pgn).match('(?:\\r\\n\\r\\n)(.*)')[1];
   // Match all items that fit the move pattern
-  let moveRegex = /([A-z]+[\d][+#=]*[BNQR]*[+#]*)/g
+  let moveRegex = /([A-z]+[\d][A-z]*[\d]*[+#=]*[BNQR]*[+#]*)/g
   correctMoves = correctMoves.match(moveRegex);
   // Keep track of how many moves are in the puzzle 
   totalMoves = correctMoves.length;
