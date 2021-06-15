@@ -65,9 +65,56 @@ let endIcon = document.querySelector('.end');
 
 // Display puzzle title and link to chess.com
 let displayInfo = (puzzle) => {
+  let newURL = getNewURL(puzzle.body.url);
+  puzzleURL.href = newURL;
   puzzleTitle.textContent = puzzle.body.title;
-  puzzleURL.href = puzzle.body.url;
 };
+
+let getNewURL = (url) => {
+  // Match for new chess.com date format
+  let dateRegex = /((\d)+-(\d)+-(\d)+)/g;
+
+  if ((url).match(dateRegex)) {
+    let puzzleDate = (url).match(dateRegex)[0].split("-");
+    
+    let year = puzzleDate[2];
+    let month = puzzleDate[0];
+    let day = puzzleDate[1];
+    // pad with zero if a single digit
+    if (day.length === 1) day = "0" + day;
+    if (month.length === 1) month = "0" + month;
+    
+    return `https://www.chess.com/daily-chess-puzzle/${year}-${month}-${day}`
+  } else {
+    // Else match for old chess.com date format
+    let oldDateRegex = /(\d){6,}/g;
+    let puzzleDate = (url).match(oldDateRegex)[0].split("");
+    let year = puzzleDate.splice(-4).join("");
+    let month, day;
+
+    if (puzzleDate.length === 4) {
+      month = puzzleDate.splice(0, 2).join("");
+      day = puzzleDate.join("");
+    } else if (puzzleDate.length === 3) {
+      month = puzzleDate.slice(0, 2).join("");
+      if (Number(month) > 12 || puzzleDate[puzzleDate.length - 1] === "0") {
+        month = puzzleDate.splice(0, 1).join("");
+        day = puzzleDate.join("");
+      } else {
+        month = puzzleDate.splice(0, 2).join("");
+        day = puzzleDate.join("");
+      }
+    } else if (puzzleDate.length === 2) {
+      month = puzzleDate.splice(0, 1).join("");
+      day = puzzleDate.join("");
+    }
+    // pad with zero if a single digit
+    if (day.length === 1) day = "0" + day;
+    if (month.length === 1) month = "0" + month;
+
+    return `https://www.chess.com/daily-chess-puzzle/${year}-${month}-${day}`
+  }
+}
 
 // Get array of correct moves and corresponding FENs from the puzzle PGN
 let getCorrectMoves = (puzzle) => {
