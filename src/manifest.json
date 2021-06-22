@@ -1,6 +1,6 @@
 {
   "name": "Daily Chess Puzzle",
-  "description": "Daily chess puzzles provided by chess.com.",
+  "description": "Solve chess.com's Daily Puzzle directly from your browser and have unlimited access to the Daily Puzzle archive, for free!",
   "background": {
     "page": "background.html"
   },
