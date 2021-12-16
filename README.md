@@ -9,7 +9,7 @@ Install [Daily Chess Puzzle](https://chrome.google.com/webstore/detail/daily-che
 <img src="https://www.stephenlenane.com/assets/images/chess/daily-chess-puzzle.png" alt="Chess Daily Puzzle Image" width="800"/>
 <p float="left">
   <img src="https://www.stephenlenane.com/assets/images/chess/daily-chess.gif" height="300" />
-  <img src="https://www.stephenlenane.com/assets/images/chess/daily-chess-puzzle2.png" width="500" /> 
+  <img src="https://www.stephenlenane.com/assets/images/chess/daily-chess-puzzle2.png" width="550" /> 
 </p>
 
 ### Stack
