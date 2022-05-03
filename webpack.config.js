@@ -1,46 +1,65 @@
-var webpack = require("webpack"),
-    path = require("path"),
-    fileSystem = require("fs"),
-    env = require("./utils/env"),
-    CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin,
-    CopyWebpackPlugin = require("copy-webpack-plugin"),
-    HtmlWebpackPlugin = require("html-webpack-plugin"),
-    WriteFilePlugin = require("write-file-webpack-plugin");
+var webpack = require('webpack'),
+  path = require('path'),
+  fileSystem = require('fs'),
+  env = require('./utils/env'),
+  CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin,
+  CopyWebpackPlugin = require('copy-webpack-plugin'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  WriteFilePlugin = require('write-file-webpack-plugin');
 
 // load the secrets
 var alias = {};
 
-var secretsPath = path.join(__dirname, ("secrets." + env.NODE_ENV + ".js"));
+var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 
-var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
+var fileExtensions = [
+  'jpg',
+  'jpeg',
+  'png',
+  'gif',
+  'eot',
+  'otf',
+  'svg',
+  'ttf',
+  'woff',
+  'woff2',
+];
 
 if (fileSystem.existsSync(secretsPath)) {
-  alias["secrets"] = secretsPath;
+  alias['secrets'] = secretsPath;
 }
 
 var options = {
-  mode: process.env.NODE_ENV || "development",
+  mode: process.env.NODE_ENV || 'development',
   entry: {
-    popup: path.join(__dirname, "src", "js", "popup.js"),
-    options: path.join(__dirname, "src", "js", "options.js"),
-    background: path.join(__dirname, "src", "js", "background.js")
+    popup: path.join(__dirname, 'src', 'js', 'popup.js'),
+    options: path.join(__dirname, 'src', 'js', 'options.js'),
+    background: path.join(__dirname, 'src', 'js', 'background.js'),
   },
   output: {
-    path: path.join(__dirname, "build"),
-    filename: "[name].bundle.js"
+    path: path.join(__dirname, 'build'),
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
+        loader: 'style-loader!css-loader',
+        exclude: /node_modules/,
       },
       {
         test: /(icon).*(\.png)$/i,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]'
+          name: '[name].[ext]',
+        },
+      },
+      {
+        test: /(button-).*(\.png)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'img/',
         },
       },
       {
@@ -48,18 +67,18 @@ var options = {
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
-          outputPath: 'img/chesspieces/wikipedia'
+          outputPath: 'img/chesspieces/wikipedia',
         },
       },
       {
         test: /\.html$/,
-        loader: "html-loader",
-        exclude: /node_modules/
-      }
-    ]
+        loader: 'html-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    alias: alias
+    alias: alias,
   },
   plugins: [
     // clean the build folder
@@ -69,44 +88,48 @@ var options = {
       NODE_ENV: 'development',
       DEBUG: false,
     }),
-    new CopyWebpackPlugin([{
-      from: "src/manifest.json",
-      transform: function (content, path) {
-        // generates the manifest file using the package.json informations
-        return Buffer.from(JSON.stringify({
-          description: process.env.npm_package_description,
-          version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
-        }))
-      }
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: 'src/manifest.json',
+        transform: function (content, path) {
+          // generates the manifest file using the package.json informations
+          return Buffer.from(
+            JSON.stringify({
+              description: process.env.npm_package_description,
+              version: process.env.npm_package_version,
+              ...JSON.parse(content.toString()),
+            })
+          );
+        },
+      },
+    ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      'window.$': 'jquery'
+      'window.$': 'jquery',
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "popup.html"),
-      filename: "popup.html",
-      chunks: ["popup"]
+      template: path.join(__dirname, 'src', 'popup.html'),
+      filename: 'popup.html',
+      chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "options.html"),
-      filename: "options.html",
-      chunks: ["options"]
+      template: path.join(__dirname, 'src', 'options.html'),
+      filename: 'options.html',
+      chunks: ['options'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "background.html"),
-      filename: "background.html",
-      chunks: ["background"]
+      template: path.join(__dirname, 'src', 'background.html'),
+      filename: 'background.html',
+      chunks: ['background'],
     }),
-    new WriteFilePlugin()
-  ]
+    new WriteFilePlugin(),
+  ],
 };
 
-if (env.NODE_ENV === "development") {
-  options.devtool = "cheap-module-eval-source-map";
+if (env.NODE_ENV === 'development') {
+  options.devtool = 'cheap-module-eval-source-map';
 }
 
 module.exports = options;

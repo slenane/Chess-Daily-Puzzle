@@ -1,104 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet"
+    <link
+      rel="stylesheet"
       href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
       integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU"
-      crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-</head>
-<body>
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
     <h1 class="title"></h1>
     <div class="random-puzzle">
-        <div class="puzzle-type-slider">
-            <label for="puzzle-switch">Random</label>
-            <label class="switch">
-                <input type="checkbox" id="puzzle-switch" class="random-slider">
-                <span class="slider round"></span>
-              </label>
-        </div>
-        <div class="next-puzzle">
-            <button class="next-puzzle-button hide disabled-button">Next</button>
-        </div>
+      <div class="puzzle-type-slider">
+        <label for="puzzle-switch">Random</label>
+        <label class="switch">
+          <input type="checkbox" id="puzzle-switch" class="random-slider" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="next-puzzle">
+        <button class="next-puzzle-button hide disabled-button">Next</button>
+      </div>
     </div>
 
-    
     <div class="controls">
-        <div class="promotion-window-white hide">
-            <div class="promotion-piece queen" data-piece="q"><img src="img/chesspieces/wikipedia/wQ.png" class="piece" alt="black queen promotion piece"></div>
-            <div class="promotion-piece knight" data-piece="n"><img src="img/chesspieces/wikipedia/wN.png" class="piece" alt="black knight promotion piece"></div>
-            <div class="promotion-piece rook" data-piece="r"><img src="img/chesspieces/wikipedia/wR.png" class="piece" alt="black rook promotion piece"></div>
-            <div class="promotion-piece bishop" data-piece="b"><img src="img/chesspieces/wikipedia/wB.png" class="piece" alt="black bishop promotion piece"></div>
-            <div class="close-promotion-window"><i class="fas fa-times close-window-white"></i></div>
+      <div class="promotion-window-white hide">
+        <div class="promotion-piece queen" data-piece="q">
+          <img
+            src="img/chesspieces/wikipedia/wQ.png"
+            class="piece"
+            alt="black queen promotion piece"
+          />
         </div>
-        <div class="promotion-window-black hide">
-            <div class="promotion-piece queen" data-piece="q"><img src="img/chesspieces/wikipedia/bQ.png" class="piece" alt="black queen promotion piece"></div>
-            <div class="promotion-piece knight" data-piece="n"><img src="img/chesspieces/wikipedia/bN.png" class="piece" alt="black knight promotion piece"></div>
-            <div class="promotion-piece rook" data-piece="r"><img src="img/chesspieces/wikipedia/bR.png" class="piece" alt="black rook promotion piece"></div>
-            <div class="promotion-piece bishop" data-piece="b"><img src="img/chesspieces/wikipedia/bB.png" class="piece" alt="black bishop promotion piece"></div>
-            <div class="close-promotion-window"><i class="fas fa-times close-window-black"></i></div>
+        <div class="promotion-piece knight" data-piece="n">
+          <img
+            src="img/chesspieces/wikipedia/wN.png"
+            class="piece"
+            alt="black knight promotion piece"
+          />
+        </div>
+        <div class="promotion-piece rook" data-piece="r">
+          <img
+            src="img/chesspieces/wikipedia/wR.png"
+            class="piece"
+            alt="black rook promotion piece"
+          />
+        </div>
+        <div class="promotion-piece bishop" data-piece="b">
+          <img
+            src="img/chesspieces/wikipedia/wB.png"
+            class="piece"
+            alt="black bishop promotion piece"
+          />
+        </div>
+        <div class="close-promotion-window">
+          <i class="fas fa-times close-window-white"></i>
+        </div>
+      </div>
+      <div class="promotion-window-black hide">
+        <div class="promotion-piece queen" data-piece="q">
+          <img
+            src="img/chesspieces/wikipedia/bQ.png"
+            class="piece"
+            alt="black queen promotion piece"
+          />
+        </div>
+        <div class="promotion-piece knight" data-piece="n">
+          <img
+            src="img/chesspieces/wikipedia/bN.png"
+            class="piece"
+            alt="black knight promotion piece"
+          />
+        </div>
+        <div class="promotion-piece rook" data-piece="r">
+          <img
+            src="img/chesspieces/wikipedia/bR.png"
+            class="piece"
+            alt="black rook promotion piece"
+          />
+        </div>
+        <div class="promotion-piece bishop" data-piece="b">
+          <img
+            src="img/chesspieces/wikipedia/bB.png"
+            class="piece"
+            alt="black bishop promotion piece"
+          />
+        </div>
+        <div class="close-promotion-window">
+          <i class="fas fa-times close-window-black"></i>
+        </div>
+      </div>
+
+      <div id="board"></div>
+
+      <div class="control-panel">
+        <div class="control-panel-left">
+          <div class="control-icon hint">
+            <i class="far fa-lightbulb"></i>
+            <span class="hover-message">Hint</span>
+          </div>
+          <div class="control-icon solution">
+            <i class="far fa-question-circle"></i>
+            <span class="hover-message">Solution</span>
+          </div>
+          <div class="control-icon reset">
+            <i class="fas fa-redo"></i>
+            <span class="hover-message">Reset</span>
+          </div>
+          <div class="control-icon flip">
+            <i class="fas fa-sync-alt"></i>
+            <span class="hover-message">Flip board</span>
+          </div>
         </div>
 
-        <div id="board"></div>
-
-        <div class="control-panel">
-            <div class="control-panel-left">
-                <div class="control-icon hint">
-                    <i class="far fa-lightbulb"></i>
-                    <span class="hover-message">Hint</span>
-                </div>
-                <div class="control-icon solution">
-                    <i class="far fa-question-circle"></i>
-                    <span class="hover-message">Solution</span>
-                </div>
-                <div class="control-icon reset">
-                    <i class="fas fa-redo"></i>
-                    <span class="hover-message">Reset</span>
-                </div>
-                <div class="control-icon flip">
-                    <i class="fas fa-sync-alt"></i>
-                    <span class="hover-message">Flip board</span>
-                </div>
-            </div>
-
-            <div class="control-panel-right">
-                <div class="control-icon play">
-                    <i class="fas fa-play"></i>
-                    <span class="hover-message">Play / Pause</span>
-                </div>
-                <div class="control-icon start">
-                    <i class="fas fa-step-backward"></i>
-                    <span class="hover-message">First Move</span>
-                </div>
-                <div class="control-icon back">
-                    <i class="fas fa-chevron-left"></i>
-                    <span class="hover-message">Previous Move</span>
-                </div>
-                <div class="control-icon forward">
-                    <i class="fas fa-chevron-right"></i>
-                    <span class="hover-message">Next Move</span>
-                </div>
-                <div class="control-icon end">
-                    <i class="fas fa-step-forward"></i>
-                    <span class="hover-message">Last Move</span>
-                </div>
-            </div>
+        <div class="control-panel-right">
+          <div class="control-icon play">
+            <i class="fas fa-play"></i>
+            <span class="hover-message">Play / Pause</span>
+          </div>
+          <div class="control-icon start">
+            <i class="fas fa-step-backward"></i>
+            <span class="hover-message">First Move</span>
+          </div>
+          <div class="control-icon back">
+            <i class="fas fa-chevron-left"></i>
+            <span class="hover-message">Previous Move</span>
+          </div>
+          <div class="control-icon forward">
+            <i class="fas fa-chevron-right"></i>
+            <span class="hover-message">Next Move</span>
+          </div>
+          <div class="control-icon end">
+            <i class="fas fa-step-forward"></i>
+            <span class="hover-message">Last Move</span>
+          </div>
         </div>
-        <div class="status-bar">
-            <p class="status"></p>
-        </div>
+      </div>
+      <div class="status-bar">
+        <p class="status"></p>
+      </div>
     </div>
-    
+
     <div class="info">
-        <p class="tip">Drag the pieces to solve!</p>
-        <p class="moves noDisplay"></p>
-        <a class="url" target="_blank">View on chess.com</a>
+      <p class="tip">Drag the pieces to solve!</p>
+      <p class="moves noDisplay"></p>
+      <div class="external-button-div">
+        <a class="url" target="_blank">
+          <button class="external-button chess-button">
+            <img
+              class="chess-icon"
+              src="img/button-chess.png"
+              alt="Chess.com icon"
+            />
+            View on chess.com
+          </button>
+        </a>
+        <a href="https://www.buymeacoffee.com/slenane" target="_blank">
+          <img
+            class="external-button coffee-button"
+            src="img/button-coffee.png"
+            alt="Buy me a coffee link"
+          />
+        </a>
+      </div>
     </div>
-</body>
+  </body>
 </html>

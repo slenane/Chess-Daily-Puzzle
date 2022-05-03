@@ -1,6 +1,6 @@
 {
   "name": "daily-chess-puzzle",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Chrome extension - Daily chess puzzle provided by chess.com",
   "scripts": {
     "build": "node utils/build.js",
