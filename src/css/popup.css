@@ -343,11 +343,11 @@ input:checked + .slider:before {
 .external-button {
   height: 2rem;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .external-button img {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .external-button:hover {
